@@ -94,6 +94,7 @@ module.exports = function (app) {
         response.json({
             success: true,
             result: 0,
+            season: seasonMatchResult.season,
             data: objectMatch,
         });
     });
