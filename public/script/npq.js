@@ -5,6 +5,7 @@ window.onload = function () {
 class NPQ {
     constructor() {
         this.numPlayerMax = 5;
+        Common.popuplateSelect('selectMatchSeason', 'Xin chọn!', window.dataCore.match.season);
         Common.popuplateSelect('selectMatchType', 'Xin chọn!', window.dataCore.match.type);
         Common.popuplateSelect('selectMatchResult', 'Xin chọn!', window.dataCore.match.typeResult);
         Common.popuplateSelect('selectMatchCalculation', 'Xin chọn!', window.dataCore.match.calculation);
@@ -77,6 +78,7 @@ class NPQ {
 
     createSendData() {
         let sendData = {};
+        sendData.season = document.getElementById('selectMatchSeason').value.trim();
         sendData.date = document.getElementById('inputMatchDate').value.trim();
         sendData.hour = parseInt(document.getElementById('inputMatchHour').value.trim());
         sendData.minute = parseInt(document.getElementById('inputMatchMinute').value.trim());
@@ -132,6 +134,12 @@ class NPQ {
 
     validateMatchData(sendData) {
         let message = [];
+        if (window.dataCore.match.season[sendData.matchSeason] == null) {
+            message.push('Match season');
+        }
+        if (sendData.date == null || sendData.date == '') {
+            message.push('Match date');
+        }
         if (!Common.isNumeric(sendData.hour) || sendData.hour < 0 || sendData.hour > 23) {
             message.push('Match hour');
         }
@@ -189,7 +197,7 @@ class NPQ {
         let divWaiting = Common.showWaiting();
         let response = await Common.sendToBackend('data/save', data);
         Common.hideWaiting(divWaiting);
-        let message = `Thao tác thành công.${response.id}`;
+        let message = `Thao tác thành công.`;
         if (response.success == false) {
             message = `Gặp lỗi ${response.code}.`;
         }

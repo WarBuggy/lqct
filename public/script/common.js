@@ -109,7 +109,7 @@ class Common {
                             .catch(function () {
                                 resolve({
                                     success: false,
-                                    code: 1,
+                                    code: 1, // cannot parse response JSON
                                 });
                             });
                     } else {

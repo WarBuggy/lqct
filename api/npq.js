@@ -20,6 +20,12 @@ module.exports = function (app) {
     async function saveMatch(request, requestIp) {
         let purpose = 'save match data';
         Common.consoleLog('(' + requestIp + ') Received request for ' + purpose + '.');
+        let stringList = [];
+        for (let i = 0; i < request.body.detail.length; i++) {
+            let object = request.body.detail[i];
+            let string = `(<matchID>,${object.player},${object.nick},${object.char},${object.role},${object.score},${object.k},${object.d},${object.a})`;
+            stringList.push(string);
+        }
         let params = [
             request.body.date,
             request.body.hour,
@@ -27,6 +33,7 @@ module.exports = function (app) {
             request.body.matchType,
             request.body.matchResult,
             request.body.matchCalculation,
+            stringList.join(','),
         ];
         let logInfo = {
             username: '',

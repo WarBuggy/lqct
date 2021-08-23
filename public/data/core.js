@@ -1,5 +1,8 @@
 window.dataCore = {
     match: {
+        season: {
+            1: { name: 'Mùa đầu tiên', },
+        },
         typeResult: {
             0: { name: 'THUA', },
             1: { name: 'THẮNG', },
