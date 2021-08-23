@@ -50,10 +50,10 @@ module.exports = function (app) {
             };
         } catch (error) {
             Common.consoleLog(`(${requestIp}) Unexpected error when ${purpose}: ${error}.`);
-            response.json({
+            return {
                 success: false,
                 result: 800,
-            });
+            };
         }
     };
 };
