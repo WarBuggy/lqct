@@ -1,7 +1,7 @@
 let Common = require('../common/common.js');
 
 module.exports = function (app) {
-    app.post('/data/save', function (request, response) {
+    app.post('/data/save', async function (request, response) {
         let requestIp = Common.getReadableIP(request);
         let saveMatchResult = await saveMatch(request, requestIp);
         if (saveMatch.success == false) {
