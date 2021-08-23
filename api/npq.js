@@ -8,7 +8,11 @@ module.exports = function (app) {
             response.json(saveMatchResult);
             return;
         }
-        console.log(saveMatchResult);
+        response.json({
+            success: true,
+            result: 0,
+            id: saveMatchResult.id
+        });
     });
 
     async function saveMatch(request, requestIp) {
@@ -34,7 +38,7 @@ module.exports = function (app) {
                 common.consoleLogError('Database error when ' + purpose + '. Error code ' + errorCode + '.');
                 return {
                     success: false,
-                    errorCode,
+                    result: errorCode,
                 };
             }
             Common.consoleLog('(' + requestIp + ') Request for ' + purpose + ' was successfully handled.');
@@ -46,7 +50,7 @@ module.exports = function (app) {
             Common.consoleLog(`(${requestIp}) Unexpected error when ${purpose}: ${error}.`);
             return {
                 success: false,
-                errorCode: 800,
+                result: 800,
             };
         }
     };

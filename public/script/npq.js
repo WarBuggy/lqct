@@ -103,19 +103,21 @@ class NPQ {
 
     validateData(sendData) {
         let message = this.validateMatchData(sendData);
-        let countPosition = 0;
-        for (let i = 1; i <= this.numPlayerMax; i++) {
+        let countValidPosition = 0;
+        for (let i = this.numPlayerMax; i >= 1; i--) {
             let result = this.validateMatchDetailObject(sendData.detail[i - 1], i);
             if (result === false) {
+                sendData.detail.splice(i, 1);
                 continue;
             }
             if (result.length == 0) {
-                countPosition = countPosition + 1;
+                countValidPosition = countValidPosition + 1;
                 continue;
             }
+            sendData.detail.splice(i, 1);
             message = message.concat(result);
         }
-        if (countPosition < 2) {
+        if (countValidPosition < 2) {
             message.push('Phải có dữ liệu của ít nhất 2 vị trí');
         }
         if (message.length > 0) {
@@ -185,7 +187,7 @@ class NPQ {
 
     async sendData(data) {
         let divWaiting = Common.showWaiting();
-        let response = await Common.sendToBackend('dataSave', data);
+        let response = await Common.sendToBackend('data/save', data);
         Common.hideWaiting(divWaiting);
         let message = 'Thao tác thành công.';
         if (response.success == false) {
