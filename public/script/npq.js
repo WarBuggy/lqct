@@ -82,6 +82,7 @@ class NPQ {
                 Common.popuplateSelect(id, 'Xin chọn!', object.data);
             }
         }
+        Common.popuplateSelect('selectPlayerMVP', 'Không có', window.dataCore.match.player);
     };
 
     createSendData() {
@@ -93,7 +94,7 @@ class NPQ {
         sendData.matchType = document.getElementById('selectMatchType').value.trim();
         sendData.matchResult = document.getElementById('selectMatchResult').value.trim();
         sendData.matchCalculation = document.getElementById('selectMatchCalculation').value.trim();
-        sendData.previewImageBase64 = this.previewImageBase64.replace(/\+/g, '%2B');
+        sendData.previewImageBase64 = (this.previewImageBase64 || '').replace(/\+/g, '%2B');
         sendData.detailTemp = [];
         for (let i = 1; i <= this.numPlayerMax; i++) {
             let object = {
@@ -108,6 +109,7 @@ class NPQ {
             };
             sendData.detailTemp.push(object);
         }
+        sendData.mvp = document.getElementById('selectPlayerMVP').value.trim();
         return sendData;
     };
 

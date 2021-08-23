@@ -36,6 +36,7 @@ module.exports = function (app) {
             request.body.matchType,
             request.body.matchResult,
             request.body.matchCalculation,
+            request.body.mvp,
             request.body.sqlPart,
         ];
         let logInfo = {
