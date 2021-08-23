@@ -23,10 +23,10 @@ async function prepareDbConnection() {
     Common.consoleLog('Begin to establish database connection...');
     let dbConnection = await DB.getConnection();
     if (dbConnection == null) {
-        common.consoleLogError('Cannot establish database conneciton. Program is now terminated.');
+        Common.consoleLogError('Cannot establish database conneciton. Program is now terminated.');
         return false;
     }
-    common.consoleLog('Established database connection.');
+    Common.consoleLog('Established database connection.');
     return true;
 };
 
@@ -35,7 +35,7 @@ function prepareHttpServer() {
     app.use(express.urlencoded({ limit: '10mb', extended: false, }));
     app.use(cors());
     http.createServer(app).listen(systemConfig.httpPort, function () {
-        common.consoleLog('HTTP Server started on port ' + systemConfig.httpPort + '.');
+        Common.consoleLog('HTTP Server started on port ' + systemConfig.httpPort + '.');
         require('./api/nqp.js')(app);
     });
 };

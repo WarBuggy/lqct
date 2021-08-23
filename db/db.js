@@ -1,5 +1,5 @@
 const dbConfig = require('./config.js');
-const common = require('../common/common.js');
+const Common = require('../common/common.js');
 const mysql = require('mysql');
 
 let connection = null;
@@ -69,16 +69,16 @@ module.exports = {
 
     closeConnection: function () {
         if (connection == null) {
-            common.consoleLog('Database connection does not exist.');
+            Common.consoleLog('Database connection does not exist.');
             return;
         }
         return new Promise(function (resolve) {
             try {
                 connection.end();
-                common.consoleLog('Database connection was closed successfully.');
+                Common.consoleLog('Database connection was closed successfully.');
                 resolve();
             } catch (closingError) {
-                common.consoleLogError('Error while closing database connection:\n' + closingError + '.');
+                Common.consoleLogError('Error while closing database connection:\n' + closingError + '.');
                 connection.destroy();
                 resolve();
             }
@@ -97,11 +97,11 @@ function createConnection() {
         });
         aConnection.connect(function (connectionError) {
             if (connectionError) {
-                common.consoleLogError('Error while connecting to database:\n' + connectionError + '.');
+                Common.consoleLogError('Error while connecting to database:\n' + connectionError + '.');
                 resolve(null);
                 return;
             }
-            common.consoleLog('Database connected with id ' + aConnection.threadId + '.');
+            Common.consoleLog('Database connected with id ' + aConnection.threadId + '.');
             resolve(aConnection);
         });
     });
@@ -115,11 +115,11 @@ function logErrorToDB(logInfo, errorMessage) {
                 let formatQuery = mysql.format('CALL `baosotrung_system`.`SYSTEM_LOG_ERROR`(?, ?, ?, ?)', logErrorParams);
                 connection.query(formatQuery, function (logError) {
                     if (logError) {
-                        common.consoleLogError(errorMessage + '.\nFailed to log error to database. Log error:\n' +
+                        Common.consoleLogError(errorMessage + '.\nFailed to log error to database. Log error:\n' +
                             logError + '.');
                         resolve(false);
                     }
-                    common.consoleLogError(errorMessage + '.\nError logged.');
+                    Common.consoleLogError(errorMessage + '.\nError logged.');
                     resolve(true);
                 });
 

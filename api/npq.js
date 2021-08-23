@@ -6,12 +6,12 @@ module.exports = function (app) {
     app.post('/data/save', function (request, response) {
         let requestIp = Common.getReadableIP(request);
         let purpose = 'save match data';
-        common.consoleLog('(' + requestIp + ') Received request for ' + purpose + '.');
+        Common.consoleLog('(' + requestIp + ') Received request for ' + purpose + '.');
         let resJson = {
             success: true,
             result: 0,
         };
         response.json(resJson);
-        common.consoleLog('(' + requestIp + ') Request for ' + purpose + ' was successfully handled.');
+        Common.consoleLog('(' + requestIp + ') Request for ' + purpose + ' was successfully handled.');
     });
 };
