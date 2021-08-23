@@ -14,8 +14,6 @@ async function start() {
     if (prepareDbConnectionResult == false) {
         return;
     }
-    rssCrawler.start();
-
     prepareHttpServer();
 };
 
