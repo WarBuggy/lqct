@@ -6,9 +6,8 @@ module.exports = function (app) {
         let requestIp = Common.getReadableIP(request);
         let saveMatchResult = await saveMatch(request, requestIp);
         if (saveMatchResult.success == false) {
-            response.status(saveMatchResult.errorCode).json({
-                success: false,
-            });
+            response.status(saveMatchResult.result);
+            response.json({ success: false, });
             return;
         }
         response.json({
