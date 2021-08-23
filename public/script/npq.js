@@ -21,7 +21,15 @@ class NPQ {
                 Common.showMessage(checkResult.message.join('<br>'));
                 return;
             }
+            let stringList = [];
+            for (let i = 0; i < sendData.detail.length; i++) {
+                let object = sendData.detail[i];
+                let string = `(<matchID>,${object.player},${object.nick},${object.char},${object.role},${object.score},${object.k},${object.d},${object.a})`;
+                stringList.push(string);
+            }
+            sendData.sqlPart = stringList.join(',');
             delete sendData.detailTemp;
+            delete sendData.detail;
             parent.sendData(sendData);
         };
     };
