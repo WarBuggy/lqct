@@ -109,20 +109,20 @@ function createConnection() {
 
 function logErrorToDB(logInfo, errorMessage) {
     return new Promise(function (resolve) {
-        module.exports.getConnection()
-            .then(function (connection) {
-                let logErrorParams = [logInfo.username, logInfo.source, logInfo.userIP, errorMessage];
-                let formatQuery = mysql.format('CALL `baosotrung_system`.`SYSTEM_LOG_ERROR`(?, ?, ?, ?)', logErrorParams);
-                connection.query(formatQuery, function (logError) {
-                    if (logError) {
-                        Common.consoleLogError(errorMessage + '.\nFailed to log error to database. Log error:\n' +
-                            logError + '.');
-                        resolve(false);
-                    }
-                    Common.consoleLogError(errorMessage + '.\nError logged.');
-                    resolve(true);
-                });
-
-            });
+        // module.exports.getConnection()
+        //     .then(function (connection) {
+        //         let logErrorParams = [logInfo.username, logInfo.source, logInfo.userIP, errorMessage];
+        //         let formatQuery = mysql.format('CALL `baosotrung_system`.`SYSTEM_LOG_ERROR`(?, ?, ?, ?)', logErrorParams);
+        //         connection.query(formatQuery, function (logError) {
+        //             if (logError) {
+        //                 Common.consoleLogError(errorMessage + '.\nFailed to log error to database. Log error:\n' +
+        //                     logError + '.');
+        //                 resolve(false);
+        //             }
+        //             Common.consoleLogError(errorMessage + '.\nError logged.');
+        //             resolve(true);
+        //         });
+        //     });
+        Common.consoleLogError(errorMessage + '.\nError not logged to database (not available).');
     });
 };

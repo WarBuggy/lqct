@@ -81,7 +81,7 @@ class NPQ {
         sendData.minute = parseInt(document.getElementById('inputMatchMinute').value.trim());
         sendData.matchType = document.getElementById('selectMatchType').value.trim();
         sendData.matchResult = document.getElementById('selectMatchResult').value.trim();
-        sendData.matchCalulation = document.getElementById('selectMatchCalculation').value.trim();
+        sendData.matchCalculation = document.getElementById('selectMatchCalculation').value.trim();
         sendData.previewImageBase64 = this.previewImageBase64;
         sendData.detail = [];
         for (let i = 1; i <= this.numPlayerMax; i++) {
@@ -143,7 +143,7 @@ class NPQ {
         if (window.dataCore.match.typeResult[sendData.matchResult] == null) {
             message.push('Match result');
         }
-        if (window.dataCore.match.calculation[sendData.matchCalulation] == null) {
+        if (window.dataCore.match.calculation[sendData.matchCalculation] == null) {
             message.push('Match calculation');
         }
         if (sendData.previewImageBase64 == null || sendData.previewImageBase64.trim() == '') {
