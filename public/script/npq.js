@@ -183,14 +183,14 @@ class NPQ {
         return message;
     };
 
-    sendData(data) {
+    async sendData(data) {
         let divWaiting = Common.showWaiting();
-        let response = await Common.sendToBackend('data/save', data);
+        let response = await Common.sendToBackend('dataSave', data);
         Common.hideWaiting(divWaiting);
         let message = 'Thao tác thành công.';
         if (response.success == false) {
-            message = `Gặp lỗi ${response.code}}.`;
+            message = `Gặp lỗi ${response.code}.`;
         }
-        Common.showMessage(messagePopup);
+        Common.showMessage(message);
     };
 };

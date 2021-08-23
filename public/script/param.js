@@ -1,1 +1,1 @@
-window.backendURL = 'https://baotrungso.com/lqct/';
+window.backendURL = 'https://capsulestudio.com.vn/api_lqct/';
