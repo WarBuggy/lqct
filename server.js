@@ -34,6 +34,6 @@ function prepareHttpServer() {
     app.use(cors());
     http.createServer(app).listen(systemConfig.httpPort, function () {
         Common.consoleLog('HTTP Server started on port ' + systemConfig.httpPort + '.');
-        require('./api/nqp.js')(app);
+        require('./api/npq.js')(app);
     });
 };
