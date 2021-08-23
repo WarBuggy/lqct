@@ -5,5 +5,5 @@ module.exports = {
     dayjsVNFormatShortDateOnly: 'DD-MM',
     dayjsVNFormatFull: 'MM-DD-YYYY HH:mm:ss',
     consoleColor: '\x1b[43m\x1b[31m',
-    httpPort: 9586,
+    httpPort: 9756,
 };
