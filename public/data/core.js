@@ -1,7 +1,15 @@
 window.dataCore = {
     match: {
         season: {
-            1: { name: 'Mùa đầu tiên', },
+            1: {
+                name: 'Mùa đầu tiên',
+                contribution: {
+                    6: {
+                        amount: 300000,
+                        reason: 'Thua chầu cà phê trước đó.',
+                    },
+                },
+            },
         },
         typeResult: {
             0: { name: 'THUA', },
@@ -13,6 +21,7 @@ window.dataCore = {
         },
         calculation: {
             1: { name: 'Cách tính 1', },
+            1: { name: 'Cách tính 2', },
         },
         role: {
             1: { name: 'RỪNG', },
@@ -37,6 +46,7 @@ window.dataCore = {
             4: { name: 'CánhBướmDối' },
             5: { name: 'Cục.tạ-Nhẹ.tơn' },
             6: { name: '-=鼓手=-' },
+            7: { name: '-bướm_đêm-' },
         },
         character: {
             1: { name: 'Valhein', },

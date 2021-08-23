@@ -148,9 +148,10 @@ class Common {
         });
     };
 
-
-
-
+    static cloneObject(input) {
+        let string = JSON.stringify(input);
+        return JSON.parse(string);
+    };
 
     static loadSVGAsXML(divParent, path, callback) {
         let loadXML = new XMLHttpRequest;

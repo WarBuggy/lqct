@@ -115,6 +115,7 @@ module.exports = function (app) {
             let record = data[i];
             let id = record.id;
             let date = record.date;
+            let o_date = record.o_date;
             let result = record.result;
             let type = record.type;
             let calculation = record.calculation;
@@ -133,6 +134,7 @@ module.exports = function (app) {
                 objectMatch = {
                     id,
                     date,
+                    o_date,
                     result,
                     type,
                     calculation,

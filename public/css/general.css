@@ -71,9 +71,12 @@ div.general-outer{
 div.general-label {
     font-size: 16px;
     color: black;
-    height: 20px;
     line-height: 20px;
-    align-self: center;
+    align-self: start;
+}
+
+.general-label.number {
+    text-align: right;
 }
 
 div.general-title {
