@@ -37,7 +37,7 @@ module.exports = function (app) {
             let result = await DB.query(params, logInfo);
             if (result.resultCode != 0) {
                 let errorCode = result.resultCode;
-                common.consoleLogError('Database error when ' + purpose + '. Error code ' + errorCode + '.');
+                Common.consoleLogError('Database error when ' + purpose + '. Error code ' + errorCode + '.');
                 return {
                     success: false,
                     result: errorCode,
