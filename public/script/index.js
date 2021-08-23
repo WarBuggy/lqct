@@ -1,37 +1,10 @@
 window.onload = function () {
-    new NPQ();
+    new Summary();
 };
 
-class NPQ {
+class Summary {
     constructor() {
-        this.numPlayerMax = 5;
-        Common.popuplateSelect('selectMatchSeason', 'Xin chọn!', window.dataCore.match.season);
-        Common.popuplateSelect('selectMatchType', 'Xin chọn!', window.dataCore.match.type);
-        Common.popuplateSelect('selectMatchResult', 'Xin chọn!', window.dataCore.match.typeResult);
-        Common.popuplateSelect('selectMatchCalculation', 'Xin chọn!', window.dataCore.match.calculation);
-        this.addUploadFunction();
-        this.popupdateSelectDetail();
 
-        let parent = this;
-        document.getElementById('buttonSubmit').onclick = function () {
-            let sendData = parent.createSendData();
-            let checkResult = parent.validateData(sendData);
-            if (checkResult.result == false) {
-                checkResult.message = ['<b>Các chi tiết sau không hợp lệ:</b>'].concat(checkResult.message);
-                Common.showMessage(checkResult.message.join('<br>'));
-                return;
-            }
-            let stringList = [];
-            for (let i = 0; i < sendData.detail.length; i++) {
-                let object = sendData.detail[i];
-                let string = `(<matchId>,${object.player},${object.nick},${object.char},${object.role},${object.score},${object.k},${object.d},${object.a})`;
-                stringList.push(string);
-            }
-            sendData.sqlPart = stringList.join(',');
-            delete sendData.detailTemp;
-            delete sendData.detail;
-            parent.sendData(sendData);
-        };
     };
 
     addUploadFunction() {
@@ -202,16 +175,14 @@ class NPQ {
         return message;
     };
 
-    async sendData(data) {
-        // console.log(data);
+    async getData() {
         let divWaiting = Common.showWaiting();
-        let response = await Common.sendToBackend('data/save', data);
-        // console.log(response.result);
+        let response = await Common.sendToBackend('data/summary');
+        console.log(response.result);
         Common.hideWaiting(divWaiting);
-        let message = `Thao tác thành công.`;
         if (response.success == false) {
-            message = `Gặp lỗi ${response.code}.`;
+            Common.showMessage(`Gặp lỗi ${response.code}.`);
+            return;
         }
-        Common.showMessage(message);
     };
 };
