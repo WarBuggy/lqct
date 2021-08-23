@@ -97,7 +97,7 @@ class Common {
                                 if (result != 0) {
                                     resolve({
                                         success: false,
-                                        code: 1,
+                                        code: result,
                                     });
                                 } else {
                                     resolve({
@@ -109,7 +109,7 @@ class Common {
                             .catch(function () {
                                 resolve({
                                     success: false,
-                                    code: 2,
+                                    code: 1,
                                 });
                             });
                     } else {

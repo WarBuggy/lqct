@@ -1,9 +1,11 @@
 let Common = require('../common/common.js');
+let DB = require('../db/db.js');
 
 module.exports = function (app) {
     app.post('/data/save', async function (request, response) {
         let requestIp = Common.getReadableIP(request);
         let saveMatchResult = await saveMatch(request, requestIp);
+        console.log(saveMatchResult);
         if (saveMatchResult.success == false) {
             response.json(saveMatchResult);
             return;
@@ -32,7 +34,7 @@ module.exports = function (app) {
             userIP: requestIp,
         };
         try {
-            let result = await db.query(params, logInfo);
+            let result = await DB.query(params, logInfo);
             if (result.resultCode != 0) {
                 let errorCode = result.resultCode;
                 common.consoleLogError('Database error when ' + purpose + '. Error code ' + errorCode + '.');
