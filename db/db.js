@@ -124,5 +124,6 @@ function logErrorToDB(logInfo, errorMessage) {
         //         });
         //     });
         Common.consoleLogError(errorMessage + '.\nError not logged to database (not available).');
+        resolve();
     });
 };
