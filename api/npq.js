@@ -5,9 +5,10 @@ module.exports = function (app) {
     app.post('/data/save', async function (request, response) {
         let requestIp = Common.getReadableIP(request);
         let saveMatchResult = await saveMatch(request, requestIp);
-        console.log(saveMatchResult);
         if (saveMatchResult.success == false) {
-            response.json(saveMatchResult);
+            response.status(saveMatchResult.errorCode).json({
+                success: false,
+            });
             return;
         }
         response.json({
