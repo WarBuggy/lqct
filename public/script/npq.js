@@ -20,6 +20,7 @@ class NPQ {
                 Common.showMessage(checkResult.message.join('<br>'));
                 return;
             }
+            delete sendData.detailTemp;
             parent.sendData(sendData);
         };
     };
@@ -83,7 +84,7 @@ class NPQ {
         sendData.matchResult = document.getElementById('selectMatchResult').value.trim();
         sendData.matchCalculation = document.getElementById('selectMatchCalculation').value.trim();
         sendData.previewImageBase64 = this.previewImageBase64;
-        sendData.detail = [];
+        sendData.detailTemp = [];
         for (let i = 1; i <= this.numPlayerMax; i++) {
             let object = {
                 player: document.getElementById(`selectPlayer${i}`).value.trim(),
@@ -95,30 +96,28 @@ class NPQ {
                 a: parseInt(document.getElementById(`inputA${i}`).value.trim()),
                 score: document.getElementById(`inputScore${i}`).value.trim(),
             };
-            sendData.detail.push(object);
+            sendData.detailTemp.push(object);
         }
-        console.log(sendData);
         return sendData;
     };
 
     validateData(sendData) {
         let message = this.validateMatchData(sendData);
-        let countValidPosition = 0;
-        for (let i = this.numPlayerMax; i >= 1; i--) {
-            let result = this.validateMatchDetailObject(sendData.detail[i - 1], i);
+        sendData.detail = [];
+        for (let i = 1; i <= this.numPlayerMax; i++) {
+            let object = sendData.detailTemp[i - 1];
+            let result = this.validateMatchDetailObject(object, i);
             if (result === false) {
-                sendData.detail.splice(i, 1);
                 continue;
             }
             if (result.length == 0) {
-                countValidPosition = countValidPosition + 1;
+                sendData.detail.push(object);
                 continue;
             }
-            sendData.detail.splice(i, 1);
             message = message.concat(result);
         }
-        if (countValidPosition < 2) {
-            message.push('Phải có dữ liệu của ít nhất 2 vị trí');
+        if (sendData.detail < 2) {
+            message.push('Phải có dữ liệu đầy đủ của ít nhất 2 vị trí');
         }
         if (message.length > 0) {
             return {
@@ -186,10 +185,11 @@ class NPQ {
     };
 
     async sendData(data) {
+        console.log(data);
         let divWaiting = Common.showWaiting();
         let response = await Common.sendToBackend('data/save', data);
         Common.hideWaiting(divWaiting);
-        let message = 'Thao tác thành công.';
+        let message = `Thao tác thành công.${response.id}`;
         if (response.success == false) {
             message = `Gặp lỗi ${response.code}.`;
         }

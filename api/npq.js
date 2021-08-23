@@ -4,14 +4,14 @@ module.exports = function (app) {
     app.post('/data/save', async function (request, response) {
         let requestIp = Common.getReadableIP(request);
         let saveMatchResult = await saveMatch(request, requestIp);
-        if (saveMatch.success == false) {
+        if (saveMatchResult.success == false) {
             response.json(saveMatchResult);
             return;
         }
         response.json({
             success: true,
             result: 0,
-            id: saveMatchResult.id
+            id: saveMatchResult.id,
         });
     });
 
