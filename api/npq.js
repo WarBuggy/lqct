@@ -71,7 +71,7 @@ module.exports = function (app) {
         try {
             let fullFileName = matchId + '.jpg';
             let pathToFile = 'public/res/img/match/' + fullFileName;
-            let base64Image = data.split(';base64,').pop();
+            let base64Image = data.split(';base64,').pop().replace(/%2B/g, '+');
             fs.outputFileSync(pathToFile, base64Image, { encoding: 'base64' });
             console.log('Image ' + pathToFile + ' was saved successfully.');
             return true;

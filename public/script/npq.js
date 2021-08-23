@@ -93,7 +93,7 @@ class NPQ {
         sendData.matchType = document.getElementById('selectMatchType').value.trim();
         sendData.matchResult = document.getElementById('selectMatchResult').value.trim();
         sendData.matchCalculation = document.getElementById('selectMatchCalculation').value.trim();
-        sendData.previewImageBase64 = this.previewImageBase64;
+        sendData.previewImageBase64 = this.previewImageBase64.replace(/\+/g, '%2B');
         sendData.detailTemp = [];
         for (let i = 1; i <= this.numPlayerMax; i++) {
             let object = {
@@ -204,6 +204,7 @@ class NPQ {
         console.log(data);
         let divWaiting = Common.showWaiting();
         let response = await Common.sendToBackend('data/save', data);
+        console.log(response.result);
         Common.hideWaiting(divWaiting);
         let message = `Thao tác thành công.`;
         if (response.success == false) {
