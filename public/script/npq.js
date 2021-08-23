@@ -24,7 +24,7 @@ class NPQ {
             let stringList = [];
             for (let i = 0; i < sendData.detail.length; i++) {
                 let object = sendData.detail[i];
-                let string = `(<matchID>,${object.player},${object.nick},${object.char},${object.role},${object.score},${object.k},${object.d},${object.a})`;
+                let string = `(<matchId>,${object.player},${object.nick},${object.char},${object.role},${object.score},${object.k},${object.d},${object.a})`;
                 stringList.push(string);
             }
             sendData.sqlPart = stringList.join(',');

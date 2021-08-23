@@ -1,12 +1,20 @@
 let Common = require('../common/common.js');
 let DB = require('../db/db.js');
 
+let fs = require('fs-extra');
+
 module.exports = function (app) {
     app.post('/data/save', async function (request, response) {
         let requestIp = Common.getReadableIP(request);
         let saveMatchResult = await saveMatch(request, requestIp);
         if (saveMatchResult.success == false) {
             response.status(saveMatchResult.result);
+            response.json({ success: false, });
+            return;
+        }
+        let saveMatchImageResult = saveMatchImage(request.body.previewImageBase64, saveMatchResult.id);
+        if (saveMatchImageResult == false) {
+            response.status(801);
             response.json({ success: false, });
             return;
         }
@@ -56,6 +64,20 @@ module.exports = function (app) {
                 success: false,
                 result: 800,
             };
+        }
+    };
+
+    function saveMatchImage(data, matchId) {
+        try {
+            let fullFileName = matchId + '.jpg';
+            let pathToFile = 'public/res/img/match/' + fullFileName;
+            let base64Image = data.split(';base64,').pop();
+            fs.outputFileSync(pathToFile, base64Image, { encoding: 'base64' });
+            console.log('Image ' + pathToFile + ' was saved successfully.');
+            return true;
+        } catch (error) {
+            console.log('Cannot save image ' + pathToFile + '. Error: ' + error);
+            return false;
         }
     };
 };
