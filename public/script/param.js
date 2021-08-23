@@ -1,0 +1,1 @@
+window.backendURL = 'https://baotrungso.com/lqct/';

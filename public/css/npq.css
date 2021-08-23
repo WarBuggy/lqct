@@ -1,0 +1,73 @@
+div.npq-outer{
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    position: relative;
+}
+
+div.npq-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-column-gap: 8px;
+    grid-row-gap: 16px;
+}
+
+div.npq-label {
+    font-size: 16px;
+    color: black;
+    height: 20px;
+    line-height: 20px;
+    align-self: center;
+}
+
+.npq-input {
+    font-size: 14pt;
+    width: 200px;
+}
+
+select.npq-select {
+    width: 210px;
+}
+
+button.npq-button {
+    width: 210px;
+    cursor: pointer;
+}
+
+div.npq-preview-image {
+    height: 170px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    grid-column: auto / span 2;
+    background-color: lightgray;
+}
+
+div.npq-title {
+    font-size: 20px;
+    font-weight: 700;
+    grid-column: auto / span 2;
+    margin-top: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.npq-title.medium {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+div.npq-control-outer{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column: auto / span 2;
+    justify-content: space-evenly;
+    margin-top: 16px;
+    margin-bottom: 30px;
+}

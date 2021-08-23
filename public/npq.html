@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <!-- Link preview -->
+    <meta name="description" content="Tình điểm cho nhóm Liên Quân Cao Thủ">
+    <meta name="keywords" content="Liên Quân, Cao thủ, Arena Of Valor, aov">
+    <meta property="og:image" content="res/img/logo_square.png" />
+    <link rel="image_src" href="res/img/logo_square.png" />
+    <!-- View port meta-->
+    <meta name="viewport"
+        content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, user-scalable=no, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="full-screen" content="yes" />
+    <meta name="screen-orientation" content="landscape" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="res/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="res/img/favicon.ico" type="image/x-icon">
+    <title>Thắng thua nhờ mồi ngon, Liên Quan Cao Thủ</title>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/general.css?0.1" />
+    <link rel="stylesheet" type="text/css" href="css/npq.css?0.1" />
+    <!-- DATA SCRIPT -->
+    <script src="data/core.js?0.1"></script>
+    <!-- RESOURCE SCRIPT -->
+    <script src="script/param.js?0.1"></script>
+    <!-- COMMON SCRIPT -->
+    <script src="script/common.js?1.0"></script>
+    <!-- SCRIPT -->
+    <script src="script/npq.js?0.1"></script>
+</head>
+
+<body>
+    <div class='npq-outer'>
+        <div class='npq-grid'>
+            <div class='npq-title'>THÔNG TIN TRẬN ĐẤU</div>
+            <div class='npq-label'>Thời gian</div>
+            <input id='inputMatchDate' class='npq-input' type='date' />
+            <div class='npq-label'>Giờ</div>
+            <input id='inputMatchHour' class='npq-input' type="number" min='0' max='23' />
+            <div class='npq-label'>Phút</div>
+            <input id='inputMatchMinute' class='npq-input' type='number' min='0' max='59' />
+            <div class='npq-label'>Thể loại</div>
+            <select id='selectMatchType' class='npq-input npq-select'></select>
+            <div class='npq-label'>Kết quả</div>
+            <select id='selectMatchResult' class='npq-input npq-select'></select>
+            <div class='npq-label'>Cách tính</div>
+            <select id='selectMatchCalculation' class='npq-input npq-select'></select>
+            <div class='npq-label'>Hình</div>
+            <button id='buttonUpload' class='npq-input npq-button' style='width: 210px;'>Tải hình</button>
+            <div id='divPreviewImage' class='npq-preview-image'></div>
+
+            <div class='npq-title'>CHI TIẾT ĐIỂM SỐ</div>
+
+            <div class='npq-title medium'>Vị trí 1</div>
+            <div class='npq-label'>Người chơi</div>
+            <select id='selectPlayer1' class='npq-input npq-select'></select>
+            <div class='npq-label'>Nick</div>
+            <select id='selectNick1' class='npq-input npq-select'></select>
+            <div class='npq-label'>Tướng</div>
+            <select id='selectChar1' class='npq-input npq-select'></select>
+            <div class='npq-label'>Vị trí</div>
+            <select id='selectRole1' class='npq-input npq-select'></select>
+            <div class='npq-label'>Kill</div>
+            <input id='inputK1' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Death</div>
+            <input id='inputD1' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Assist</div>
+            <input id='inputA1' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Score</div>
+            <input id='inputScore1' class='npq-input' type='number' min='0' />
+
+            <div class='npq-title medium'>Vị trí 2</div>
+            <div class='npq-label'>Người chơi</div>
+            <select id='selectPlayer2' class='npq-input npq-select'></select>
+            <div class='npq-label'>Nick</div>
+            <select id='selectNick2' class='npq-input npq-select'></select>
+            <div class='npq-label'>Tướng</div>
+            <select id='selectChar2' class='npq-input npq-select'></select>
+            <div class='npq-label'>Vị trí</div>
+            <select id='selectRole2' class='npq-input npq-select'></select>
+            <div class='npq-label'>Kill</div>
+            <input id='inputK2' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Death</div>
+            <input id='inputD2' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Assist</div>
+            <input id='inputA2' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Score</div>
+            <input id='inputScore2' class='npq-input' type='number' min='0' />
+
+            <div class='npq-title medium'>Vị trí 3</div>
+            <div class='npq-label'>Người chơi</div>
+            <select id='selectPlayer3' class='npq-input npq-select'></select>
+            <div class='npq-label'>Nick</div>
+            <select id='selectNick3' class='npq-input npq-select'></select>
+            <div class='npq-label'>Tướng</div>
+            <select id='selectChar3' class='npq-input npq-select'></select>
+            <div class='npq-label'>Vị trí</div>
+            <select id='selectRole3' class='npq-input npq-select'></select>
+            <div class='npq-label'>Kill</div>
+            <input id='inputK3' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Death</div>
+            <input id='inputD3' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Assist</div>
+            <input id='inputA3' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Score</div>
+            <input id='inputScore3' class='npq-input' type='number' min='0' />
+
+            <div class='npq-title medium'>Vị trí 4</div>
+            <div class='npq-label'>Người chơi</div>
+            <select id='selectPlayer4' class='npq-input npq-select'></select>
+            <div class='npq-label'>Nick</div>
+            <select id='selectNick4' class='npq-input npq-select'></select>
+            <div class='npq-label'>Tướng</div>
+            <select id='selectChar4' class='npq-input npq-select'></select>
+            <div class='npq-label'>Vị trí</div>
+            <select id='selectRole4' class='npq-input npq-select'></select>
+            <div class='npq-label'>Kill</div>
+            <input id='inputK4' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Death</div>
+            <input id='inputD4' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Assist</div>
+            <input id='inputA4' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Score</div>
+            <input id='inputScore4' class='npq-input' type='number' min='0' />
+
+            <div class='npq-title medium'>Vị trí 5</div>
+            <div class='npq-label'>Người chơi</div>
+            <select id='selectPlayer5' class='npq-input npq-select'></select>
+            <div class='npq-label'>Nick</div>
+            <select id='selectNick5' class='npq-input npq-select'></select>
+            <div class='npq-label'>Tướng</div>
+            <select id='selectChar5' class='npq-input npq-select'></select>
+            <div class='npq-label'>Vị trí</div>
+            <select id='selectRole5' class='npq-input npq-select'></select>
+            <div class='npq-label'>Kill</div>
+            <input id='inputK5' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Death</div>
+            <input id='inputD5' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Assist</div>
+            <input id='inputA5' class='npq-input' type='number' min='0' />
+            <div class='npq-label'>Score</div>
+            <input id='inputScore5' class='npq-input' type='number' min='0' />
+
+            <div class='npq-control-outer'>
+                <button id='buttonSubmit' class='npq-input' style='width: 80px;'>Gửi</button>
+                <button id='buttonReset' class='npq-input' style='width: 80px;'>Reset</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
