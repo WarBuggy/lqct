@@ -134,7 +134,7 @@ class NPQ {
 
     validateMatchData(sendData) {
         let message = [];
-        if (window.dataCore.match.season[sendData.matchSeason] == null) {
+        if (window.dataCore.match.season[sendData.season] == null) {
             message.push('Match season');
         }
         if (sendData.date == null || sendData.date == '') {

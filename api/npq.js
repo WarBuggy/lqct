@@ -27,6 +27,7 @@ module.exports = function (app) {
             stringList.push(string);
         }
         let params = [
+            request.body.season,
             request.body.date,
             request.body.hour,
             request.body.minute,
