@@ -94,3 +94,13 @@ div.general-title {
     margin-bottom: 8px;
     text-align: left;
 }
+
+.general-input {
+    font-size: 14pt;
+    width: 200px;
+}
+
+button.general-button {
+    cursor: pointer;
+    font-size: 14pt;
+}

@@ -19,16 +19,16 @@
     <link rel="icon" href="res/img/favicon.ico" type="image/x-icon">
     <title>Thắng thua nhờ mồi ngon, Liên Quan Cao Thủ</title>
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="css/general.css?0.1" />
-    <link rel="stylesheet" type="text/css" href="css/index.css?0.1" />
+    <link rel="stylesheet" type="text/css" href="css/general.css?0.2" />
+    <link rel="stylesheet" type="text/css" href="css/index.css?0.2" />
     <!-- DATA SCRIPT -->
-    <script src="data/core.js?0.1"></script>
+    <script src="data/core.js?0.2"></script>
     <!-- RESOURCE SCRIPT -->
     <script src="script/param.js?0.1"></script>
     <!-- COMMON SCRIPT -->
     <script src="script/common.js?1.0"></script>
     <!-- SCRIPT -->
-    <script src="script/index.js?0.1"></script>
+    <script src="script/index.js?0.2"></script>
 </head>
 
 <body>
@@ -49,6 +49,13 @@
             <div id='divMatchLost' class='general-label'></div>
             <div class='general-label'><b>ĐÓNG GÓP</b></div>
             <div id='divTotalContrib' class='general-label number'></div>
+
+            <div class='general-title medium'>Chi tiết trận đấu</div>
+            <div id='divFindMatchLabel' class='general-label'>Tìm trận theo số</div>
+            <div style='display: grid; align-content: space-between;'>
+                <input id='inputMatchId' class='general-input' type='number' min='1' style='height: 20px;' />
+                <button id='showMatch' class='general-button' style='width: 100px;'>Tìm</button>
+            </div>
 
             <div class='general-title medium'>Chi tiết từng cá nhân</div>
         </div>

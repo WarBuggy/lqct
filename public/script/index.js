@@ -26,6 +26,11 @@ class Summary {
         this.calculate();
 
         this.displayData();
+
+        let parent = this;
+        document.getElementById('showMatch').onclick = function () {
+            parent.showMatch();
+        };
     };
 
     sortData() {
@@ -57,6 +62,10 @@ class Summary {
                 lost: 0,
                 mvp: 0,
                 play: 0,
+                win: 0,
+                contribTime: 0,
+                historyContrib: {},
+                historyCredit: {},
             };
             this.data.totalContribution = this.data.totalContribution + contribution;
         }
@@ -65,14 +74,17 @@ class Summary {
     displayData() {
         document.getElementById('divSeasonName').innerText = window.dataCore.match.season[this.data.season].name;
         document.getElementById('divTotalMatch').innerText = this.data.matchList.length;
-        let matchFirst = this.data.matchList[this.data.matchList.length - 1];
-        let matchLast = this.data.matchList[0];
-        document.getElementById('divMatchFrom').innerHTML = `Trận ${matchFirst.id},<br>${matchFirst.date}`;
-        document.getElementById('divMatchTo').innerHTML = `Trận ${matchLast.id},<br>${matchLast.date}`;
+        this.data.matchFirst = this.data.matchList[this.data.matchList.length - 1];
+        this.data.matchLast = this.data.matchList[0];
+        document.getElementById('divMatchFrom').innerHTML = `Trận <b>${this.data.matchFirst.id}</b>,<br>${this.data.matchFirst.date}`;
+        document.getElementById('divMatchTo').innerHTML = `Trận <b>${this.data.matchLast.id}</b>,<br>${this.data.matchLast.date}`;
         document.getElementById('divMatchWin').innerHTML = `${this.data.summary.win} trận`;
         document.getElementById('divMatchLost').innerHTML = `${this.data.summary.lost} trận`;
 
         document.getElementById('divTotalContrib').innerHTML = `<b>${Number(this.data.totalContribution).toLocaleString('vi-vn')} VNĐ</b>`;
+
+        document.getElementById('divFindMatchLabel').innerHTML =
+            `Tìm trận theo số từ ${this.data.matchFirst.id} đến ${this.data.matchLast.id}`;
         this.displayPlayerDetail();
     };
 
@@ -91,9 +103,9 @@ class Summary {
             divName.innerText = object.name;
 
             let divLabelContrib = Common.createElement('div', 'general-label', divGrid);
-            divLabelContrib.innerText = 'Tổng đóng góp';
+            divLabelContrib.innerText = 'Đóng góp';
             let divContrib = Common.createElement('div', ['general-label', 'number',], divGrid);
-            divContrib.innerText = Number(object.contribution).toLocaleString('vi-vn');
+            divContrib.innerHTML = `<b>${Number(object.contribution).toLocaleString('vi-vn')}</b>`;
 
             let divLabelCredit = Common.createElement('div', 'general-label', divGrid);
             divLabelCredit.innerText = 'Credit còn';
@@ -106,14 +118,24 @@ class Summary {
             divPlay.innerText = Number(object.play).toLocaleString('vi-vn');
 
             let divLabelContribTime = Common.createElement('div', 'general-label', divGrid);
-            divLabelContribTime.innerText = 'Lần thua';
+            divLabelContribTime.innerText = 'Lần đóng góp';
             let divContribTime = Common.createElement('div', ['general-label', 'number',], divGrid);
-            divContribTime.innerText = Number(object.lost).toLocaleString('vi-vn');
+            divContribTime.innerText = Number(object.contribTime).toLocaleString('vi-vn');
+
+            let divLabelWinTime = Common.createElement('div', 'general-label', divGrid);
+            divLabelWinTime.innerText = 'Lần thắng';
+            let divWinTime = Common.createElement('div', ['general-label', 'number',], divGrid);
+            divWinTime.innerText = Number(object.win).toLocaleString('vi-vn');
 
             let divLabelMVPTime = Common.createElement('div', 'general-label', divGrid);
             divLabelMVPTime.innerText = 'Lần MVP';
             let divMVPTime = Common.createElement('div', ['general-label', 'number',], divGrid);
             divMVPTime.innerText = Number(object.mvp).toLocaleString('vi-vn');
+
+            let divLabelLostTime = Common.createElement('div', 'general-label', divGrid);
+            divLabelLostTime.innerText = 'Lần thua';
+            let divLostTime = Common.createElement('div', ['general-label', 'number',], divGrid);
+            divLostTime.innerText = Number(object.lost).toLocaleString('vi-vn');
 
             console.log([object.name, object.contribution, object.credit, object.play, object.lost, object.mvp]);
         }
@@ -153,7 +175,7 @@ class Summary {
             if (match.calculation == 1) {
                 this.calculateMethod1(match);
             } else if (match.calculation == 2) {
-                this.calculateMethod1(match);
+                this.calculateMethod2(match);
             }
         };
     };
@@ -166,8 +188,15 @@ class Summary {
             if (role == 1) {
                 detail.score = detail.score - 100;
             }
-            this.objectPlayer[detail.player].play = this.objectPlayer[detail.player].play + 1;
+            let player = this.objectPlayer[detail.player];
+            player.play = player.play + 1;
+            if (match.result == 1) {
+                player.win = player.win + 1;
+            } else {
+                player.lost = player.lost + 1;
+            }
         }
+        match.totalBefore = this.data.totalContribution;
         match.detail.sort(this.sortScoreAsc);
         match.contributor = match.detail[0].player;
         let contributor = this.objectPlayer[match.contributor];
@@ -178,19 +207,31 @@ class Summary {
             contribution = 10000;
             credit = 10000;
         }
+        match.contribution = contribution;
         if (contributor != null) {
-            contributor.lost = contributor.lost + 1;
+            contributor.contribTime = contributor.contribTime + 1;
+            match.creditBeforeContrib = contributor.credit;
             contributor.credit = contributor.credit - contribution;
             if (contributor.credit <= 0) {
-                let contributionFinal = - contributor.credit;
+                let contributionFinal = Math.abs(contributor.credit);
                 contributor.credit = 0;
                 contributor.contribution = contributor.contribution + contributionFinal;
                 this.data.totalContribution = this.data.totalContribution + contributionFinal;
+                match.contributionFinal = contributionFinal;
+            } else {
+                contributor.contribution = 0;
+                match.contributionFinal = 0;
             }
+            match.totalAfter = this.data.totalContribution;
+            match.creditAfterContrib = contributor.credit;
         }
         if (creditor != null) {
             creditor.mvp = creditor.mvp + 1;
+            match.creditorBefore = creditor.credit;
+            match.credit = credit;
             creditor.credit = creditor.credit + credit;
+            match.creditorAfter = creditor.credit;
+            match.creditor = creditor;
         }
     };
 
@@ -203,10 +244,17 @@ class Summary {
                 detail.score = detail.score - 100;
             }
             if (role == 5) {
-                detail.score = detail.score - 500;
+                detail.score = detail.score - 50;
             }
-            this.objectPlayer[detail.player].play = this.objectPlayer[detail.player].play + 1;
+            let player = this.objectPlayer[detail.player];
+            player.play = player.play + 1;
+            if (match.result == 1) {
+                player.win = player.win + 1;
+            } else {
+                player.lost = player.lost + 1;
+            }
         }
+        match.totalBefore = this.data.totalContribution;
         match.detail.sort(this.sortScoreAsc);
         match.contributor = match.detail[0].player;
         let contributor = this.objectPlayer[match.contributor];
@@ -217,19 +265,206 @@ class Summary {
             contribution = 10000;
             credit = 10000;
         }
+        match.contribution = contribution;
         if (contributor != null) {
-            contributor.lost = contributor.lost + 1;
+            contributor.contribTime = contributor.contribTime + 1;
+            match.creditBeforeContrib = contributor.credit;
             contributor.credit = contributor.credit - contribution;
             if (contributor.credit <= 0) {
-                let contributionFinal = - contributor.credit;
+                let contributionFinal = Math.abs(contributor.credit);
                 contributor.credit = 0;
                 contributor.contribution = contributor.contribution + contributionFinal;
                 this.data.totalContribution = this.data.totalContribution + contributionFinal;
+                match.contributionFinal = contributionFinal;
+            } else {
+                contributor.contribution = 0;
+                match.contributionFinal = 0;
             }
+            contributor.historyContrib
+            match.totalAfter = this.data.totalContribution;
+            match.creditAfterContrib = contributor.credit;
         }
         if (creditor != null) {
             creditor.mvp = creditor.mvp + 1;
+            match.creditorBefore = creditor.credit;
+            match.credit = credit;
             creditor.credit = creditor.credit + credit;
+            match.creditorAfter = creditor.credit;
+            match.creditor = creditor;
+        }
+    };
+
+    showMatch() {
+        let message = `Xin nhập một số từ ${this.data.matchFirst.id} đến ${this.data.matchLast.id}`;
+        this.currentShowId = parseInt(document.getElementById('inputMatchId').value);
+        if (!Common.isNumeric(this.currentShowId) || this.currentShowId < this.data.matchFirst.id ||
+            this.currentShowId > this.data.matchLast.id) {
+            this.currentShowId = null;
+            Common.showMessage(message);
+            return;
+        }
+
+        let parent = this;
+        let divOverlay = document.createElement('div');
+        divOverlay.classList.add('general-overlay');
+        let divParent = Common.createElement('div', 'index-popup-match-parent', divOverlay);
+        let divOuter = Common.createElement('div', 'index-popup-match-grid-outer', divParent);
+        let divGrid = Common.createElement('div', 'index-popup-match-grid', divOuter);
+
+        let buttonPrev = Common.createElement('button', 'general-button', divParent);
+        buttonPrev.innerText = '< Trận trước';
+        buttonPrev.onclick = function () {
+            divGrid.innerHTML = '';
+            parent.currentShowId = Math.max(parent.currentShowId - 1, parent.data.matchFirst.id);
+            parent.createPopupMatch(parent.data.data[parent.currentShowId], divGrid, buttonPrev, buttonNext);
+        };
+
+        let buttonClose = Common.createElement('button', 'general-button', divParent);
+        buttonClose.innerText = 'Đóng';
+        buttonClose.onclick = function () {
+            document.body.removeChild(divOverlay);
+        };
+
+        let buttonNext = Common.createElement('button', 'general-button', divParent);
+        buttonNext.innerText = 'Trận kế >';
+        buttonNext.onclick = function () {
+            divGrid.innerHTML = '';
+            parent.currentShowId = Math.min(parent.currentShowId + 1, parent.data.matchLast.id);
+            parent.createPopupMatch(parent.data.data[parent.currentShowId], divGrid, buttonPrev, buttonNext);
+        };
+        this.createPopupMatch(this.data.data[this.currentShowId], divGrid, buttonPrev, buttonNext);
+        document.body.appendChild(divOverlay);
+    };
+
+    createPopupMatch(match, divGrid, buttonPrev, buttonNext) {
+        if (match.id == this.data.matchFirst.id) {
+            buttonPrev.style.pointerEvents = 'none';
+            buttonPrev.style.color = 'gray';
+        } else {
+            buttonPrev.style.pointerEvents = 'auto';
+            buttonPrev.style.color = 'black';
+        }
+        if (match.id == this.data.matchLast.id) {
+            buttonNext.style.pointerEvents = 'none';
+            buttonNext.style.color = 'gray';
+        } else {
+            buttonNext.style.pointerEvents = 'auto';
+            buttonNext.style.color = 'black';
+        }
+
+        let divImage = Common.createElement('div', 'index-popup-match-image', divGrid);
+        divImage.style.backgroundImage = `url(https://capsulestudio.com.vn/lqct/images/match/${match.id}.jpg)`;
+
+        let divLabelMathId = Common.createElement('div', ['general-title', 'medium'], divGrid);
+        divLabelMathId.style.textAlign = 'center';
+        divLabelMathId.innerText = `Trận ${match.id}`;
+
+        let divLabelContribBefore = Common.createElement('div', ['general-label',], divGrid);
+        divLabelContribBefore.innerText = 'Quỹ trước trận';
+        let divContribBefore = Common.createElement('div', ['general-label', 'number'], divGrid);
+        divContribBefore.innerText = `${Number(match.totalBefore).toLocaleString('vi-vn')}`;
+
+        let divLabelContribtor = Common.createElement('div', ['general-label',], divGrid);
+        divLabelContribtor.innerHTML = '<b>Người đóng góp</b>';
+        let divContribtor = Common.createElement('div', ['general-label', 'number'], divGrid);
+        divContribtor.innerHTML = `<b>${this.objectPlayer[match.contributor].name}</b>`;
+
+        let divLabelContribRequired = Common.createElement('div', ['general-label',], divGrid);
+        divLabelContribRequired.innerText = 'Số tiền cần góp';
+        let divContribRequired = Common.createElement('div', ['general-label', 'number'], divGrid);
+        divContribRequired.innerText = `${Number(match.contribution).toLocaleString('vi-vn')}`;
+
+        let divLabelCreditBefore = Common.createElement('div', ['general-label',], divGrid);
+        divLabelCreditBefore.innerText = 'Credit trước trận';
+        let divCreditBefore = Common.createElement('div', ['general-label', 'number'], divGrid);
+        divCreditBefore.innerText = `${Number(match.creditBeforeContrib).toLocaleString('vi-vn')}`;
+
+        let divLabelContrib = Common.createElement('div', ['general-label',], divGrid);
+        divLabelContrib.innerText = 'Số tiền đóng góp';
+        let divContrib = Common.createElement('div', ['general-label', 'number'], divGrid);
+        divContrib.innerText = `${Number(match.contributionFinal).toLocaleString('vi-vn')}`;
+
+        let divLabelCreditAfter = Common.createElement('div', ['general-label',], divGrid);
+        divLabelCreditAfter.innerText = 'Credit sau trận';
+        let divCreditAfter = Common.createElement('div', ['general-label', 'number'], divGrid);
+        divCreditAfter.innerText = `${Number(match.creditAfterContrib).toLocaleString('vi-vn')}`;
+
+        let divLabelContribAfter = Common.createElement('div', ['general-label'], divGrid);
+        divLabelContribAfter.innerHTML = '<b>Quỹ sau trận</b>';
+        let divContribAfter = Common.createElement('div', ['general-label', 'number'], divGrid);
+        divContribAfter.innerHTML = `<b>${Number(match.totalAfter).toLocaleString('vi-vn')}</b>`;
+
+        Common.createElement('div', ['general-label'], divGrid);
+        Common.createElement('div', ['general-label'], divGrid);
+
+
+        let divLabelCredior = Common.createElement('div', ['general-label'], divGrid);
+        divLabelCredior.innerHTML = '<b>Người nhận credit</b>';
+        let divCreditor = Common.createElement('div', ['general-label', 'number'], divGrid);
+        if (match.creditor == null) {
+            divCreditor.innerHTML = `<b>Không có</b>`;
+        } else {
+            divCreditor.innerHTML = `<b>${match.creditor.name}</b>`;
+
+            let divLabelCreditBefore = Common.createElement('div', ['general-label'], divGrid);
+            divLabelCreditBefore.innerText = 'Credit trước trận';
+            let divCreditBefore = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divCreditBefore.innerText = `${Number(match.creditorBefore).toLocaleString('vi-vn')}`;
+
+            let divLabelCredit = Common.createElement('div', ['general-label'], divGrid);
+            divLabelCredit.innerText = 'Credit';
+            let divCredit = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divCredit.innerText = `${Number(match.credit).toLocaleString('vi-vn')}`;
+
+            let divLabelCreditAfter = Common.createElement('div', ['general-label'], divGrid);
+            divLabelCreditAfter.innerText = 'Credit sau trận trận';
+            let divCreditAfter = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divCreditAfter.innerText = `${Number(match.creditorAfter).toLocaleString('vi-vn')}`;
+        }
+
+        let divTitlePosition = Common.createElement('div', ['general-title', 'medium'], divGrid);
+        divTitlePosition.innerText = 'CHI TIẾT TRẬN';
+
+        for (let i = 0; i < match.detail.length; i++) {
+            let detail = match.detail[i];
+
+            let divLabelPosition = Common.createElement('div', ['general-title', 'medium'], divGrid);
+            let textPosition = `Vị trí ${i + 1}`;
+            if (detail.player == match.mvp) {
+                textPosition = textPosition + ' (MVP)';
+            }
+            divLabelPosition.innerHTML = textPosition;
+
+
+            let divLabelName = Common.createElement('div', ['general-label'], divGrid);
+            divLabelName.innerText = 'Tên';
+            let divName = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divName.innerText = this.objectPlayer[detail.player].name;
+
+            let divLabelNick = Common.createElement('div', ['general-label'], divGrid);
+            divLabelNick.innerText = 'Nick';
+            let divNick = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divNick.innerText = window.dataCore.match.nick[detail.nick].name;
+
+            let divLabelChar = Common.createElement('div', ['general-label'], divGrid);
+            divLabelChar.innerText = 'Tướng';
+            let divChar = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divChar.innerText = window.dataCore.match.character[detail.character].name;
+
+            let divLabelRole = Common.createElement('div', ['general-label'], divGrid);
+            divLabelRole.innerText = 'Vai trò';
+            let divRole = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divRole.innerText = window.dataCore.match.role[detail.role].name;
+
+            let divLabelKDA = Common.createElement('div', ['general-label'], divGrid);
+            divLabelKDA.innerText = 'K / D/ A';
+            let divKDA = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divKDA.innerText = `${detail.k} / ${detail.d} / ${detail.a}`;
+
+            let divLabelScore = Common.createElement('div', ['general-label'], divGrid);
+            divLabelScore.innerText = 'Điểm';
+            let divScore = Common.createElement('div', ['general-label', 'number'], divGrid);
+            divScore.innerText = parseInt(detail.score) / 100;
         }
     };
 };

@@ -21,7 +21,7 @@ window.dataCore = {
         },
         calculation: {
             1: { name: 'Cách tính 1', },
-            1: { name: 'Cách tính 2', },
+            2: { name: 'Cách tính 2', },
         },
         role: {
             1: { name: 'RỪNG', },
