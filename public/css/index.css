@@ -50,6 +50,11 @@ div.index-popup-match-image {
     grid-column: auto / span 2;
 }
 
+div.general-label {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
 .general-label.calc {
     color: blue;
     cursor: pointer;

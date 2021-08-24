@@ -35,7 +35,13 @@ class Summary {
 
     sortData() {
         let sort = function (a, b) {
-            return b.o_date > a.o_date;
+            if (b.o_date > a.o_date) {
+                return 1;
+            }
+            if (b.o_date < a.o_date) {
+                return -1;
+            }
+            return 0;
         };
         let matchList = Object.values(this.data.data);
         matchList.sort(sort);
