@@ -20,8 +20,27 @@ window.dataCore = {
             1: { name: 'Rank', },
         },
         calculation: {
-            1: { name: 'Cách tính 1', },
-            2: { name: 'Cách tính 2', },
+            1: {
+                name: 'Cách tính 1',
+                desc: [
+                    'Thắng: chót điểm 10k',
+                    'Thua: chót điểm 20k',
+                    'Rừng chấp 1 điểm',
+                    'MVP Thắng: 10k credit (không được rút)',
+                    'MVP Thua: 5k credit (không được rút)',
+                ],
+            },
+            2: {
+                name: 'Cách tính 2',
+                desc: [
+                    'Thắng: chót điểm 10k',
+                    'Thua: chót điểm 20k',
+                    'Rừng chấp 1 điểm',
+                    'SP chấp 0.5 điểm',
+                    'MVP Thắng: 10k credit (không được rút)',
+                    'MVP Thua: 5k credit (không được rút)',
+                ],
+            },
         },
         role: {
             1: { name: 'RỪNG', },

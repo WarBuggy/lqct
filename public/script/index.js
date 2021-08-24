@@ -359,6 +359,14 @@ class Summary {
         divLabelMathId.style.textAlign = 'center';
         divLabelMathId.innerText = `Trận ${match.id}`;
 
+        let divLabelCalc = Common.createElement('div', ['general-label'], divGrid);
+        divLabelCalc.innerHTML = 'Cách tích';
+        let divCalc = Common.createElement('div', ['general-label', 'number', 'calc'], divGrid);
+        divCalc.innerHTML = window.dataCore.match.calculation[match.calculation].name;
+        divCalc.onclick = function () {
+            Common.showMessage(window.dataCore.match.calculation[match.calculation].desc.join('<br>'));
+        };
+
         let divLabelContribBefore = Common.createElement('div', ['general-label',], divGrid);
         divLabelContribBefore.innerText = 'Quỹ trước trận';
         let divContribBefore = Common.createElement('div', ['general-label', 'number'], divGrid);

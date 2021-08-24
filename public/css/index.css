@@ -49,3 +49,8 @@ div.index-popup-match-image {
     background-position: center;
     grid-column: auto / span 2;
 }
+
+.general-label.calc {
+    color: blue;
+    cursor: pointer;
+}
