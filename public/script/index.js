@@ -360,7 +360,7 @@ class Summary {
         divLabelMathId.innerText = `Trận ${match.id}`;
 
         let divLabelCalc = Common.createElement('div', ['general-label'], divGrid);
-        divLabelCalc.innerHTML = 'Cách tích';
+        divLabelCalc.innerHTML = 'Cách tính';
         let divCalc = Common.createElement('div', ['general-label', 'number', 'calc'], divGrid);
         divCalc.innerHTML = window.dataCore.match.calculation[match.calculation].name;
         divCalc.onclick = function () {
@@ -444,28 +444,20 @@ class Summary {
             divLabelPosition.innerHTML = textPosition;
 
 
-            let divLabelName = Common.createElement('div', ['general-label'], divGrid);
-            divLabelName.innerText = 'Tên';
-            let divName = Common.createElement('div', ['general-label', 'number'], divGrid);
+            let divName = Common.createElement('div', ['general-label',], divGrid);
             divName.innerText = this.objectPlayer[detail.player].name;
 
-            let divLabelNick = Common.createElement('div', ['general-label'], divGrid);
-            divLabelNick.innerText = 'Nick';
             let divNick = Common.createElement('div', ['general-label', 'number'], divGrid);
             divNick.innerText = window.dataCore.match.nick[detail.nick].name;
 
-            let divLabelChar = Common.createElement('div', ['general-label'], divGrid);
-            divLabelChar.innerText = 'Tướng';
-            let divChar = Common.createElement('div', ['general-label', 'number'], divGrid);
+            let divChar = Common.createElement('div', ['general-label',], divGrid);
             divChar.innerText = window.dataCore.match.character[detail.character].name;
 
-            let divLabelRole = Common.createElement('div', ['general-label'], divGrid);
-            divLabelRole.innerText = 'Vai trò';
             let divRole = Common.createElement('div', ['general-label', 'number'], divGrid);
             divRole.innerText = window.dataCore.match.role[detail.role].name;
 
             let divLabelKDA = Common.createElement('div', ['general-label'], divGrid);
-            divLabelKDA.innerText = 'K / D/ A';
+            divLabelKDA.innerText = 'K / D / A';
             let divKDA = Common.createElement('div', ['general-label', 'number'], divGrid);
             divKDA.innerText = `${detail.k} / ${detail.d} / ${detail.a}`;
 
