@@ -28,6 +28,10 @@ module.exports = function (app) {
     async function saveMatch(request, requestIp) {
         let purpose = 'save match data';
         Common.consoleLog('(' + requestIp + ') Received request for ' + purpose + '.');
+        let mvp = request.body.mvp;
+        if (mvp == 'null') {
+            mvp = null;
+        }
         let params = [
             request.body.season,
             request.body.date,
@@ -36,7 +40,7 @@ module.exports = function (app) {
             request.body.matchType,
             request.body.matchResult,
             request.body.matchCalculation,
-            request.body.mvp,
+            mvp,
             request.body.sqlPart,
         ];
         let logInfo = {
