@@ -437,7 +437,15 @@ class Summary {
         }
 
         let divTitlePosition = Common.createElement('div', ['general-title', 'medium'], divGrid);
-        divTitlePosition.innerText = 'CHI TIẾT TRẬN';
+        divTitlePosition.innerText = 'CHI TIẾT ĐIỂM SỐ';
+
+        let divLabelResult = Common.createElement('div', ['general-label'], divGrid);
+        divLabelResult.innerHTML = '<b>Kết quả</b>';
+        let divResult = Common.createElement('div', ['general-label', 'number'], divGrid);
+        let colorResult = window.dataCore.match.typeResult[match.result].color;
+        let textResult = window.dataCore.match.typeResult[match.result].name;
+        divResult.style.color = colorResult;
+        divResult.innerHTML = `<b>${textResult}</b>`;
 
         for (let i = 0; i < match.detail.length; i++) {
             let detail = match.detail[i];

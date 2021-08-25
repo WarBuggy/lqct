@@ -12,8 +12,8 @@ window.dataCore = {
             },
         },
         typeResult: {
-            0: { name: 'THUA', },
-            1: { name: 'THẮNG', },
+            0: { name: 'THUA', color: 'red', },
+            1: { name: 'THẮNG', color: 'blue', },
         },
         type: {
             0: { name: 'Thường', },
