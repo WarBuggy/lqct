@@ -66,6 +66,7 @@ window.dataCore = {
             5: { name: 'Cục.tạ-Nhẹ.tơn' },
             6: { name: '-=鼓手=-' },
             7: { name: '-bướm_đêm-' },
+            8: { name: 'KennyCool' },
         },
         character: {
             1: { name: 'Valhein', },
